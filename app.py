@@ -61,7 +61,9 @@ class InferlessPythonModel:
         return img
     
 
-    def infer(self, text, input_image):
+    def infer(self, inputs):
+        text = inputs["text"]
+        input_image = inputs["input_image"]
         import base64
         import io
 
@@ -93,7 +95,7 @@ class InferlessPythonModel:
         output_image.save(buffered, format="JPEG")
         img_str = base64.b64encode(buffered.getvalue())
 
-        return img_str
+        return {"generated_image_base64": img_str.decode("utf-8")}
 
 
     def finalize(self):
